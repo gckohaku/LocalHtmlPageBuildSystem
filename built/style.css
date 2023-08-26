@@ -1,0 +1,19 @@
+ #area1 .docking-test-case { 
+ 	color: red; 
+ 	font-size: 2rem; 
+ } 
+ #area2 .container { 
+ 	border: solid red 2px; 
+ } 
+ #area2 .container p { 
+ 	color: blue; 
+ 	font-size: 2rem; 
+ } 
+ #area2 .container .inner1 p { 
+ 	color: #c050c0; 
+ 	font-weight: bold; 
+ } 
+ #area2 .container .inner2 p { 
+ 	color: green; 
+ 	font-size: 0.7rem; 
+ } 

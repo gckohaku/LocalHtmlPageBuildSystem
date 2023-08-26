@@ -1,0 +1,10 @@
+.button-container {
+	text-align: center;
+	padding: 20px;
+}
+
+.build-button {
+	padding-block: 5px;
+	padding-inline: 10px;
+	cursor: pointer;
+}

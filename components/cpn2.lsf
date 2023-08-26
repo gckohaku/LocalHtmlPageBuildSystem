@@ -1,0 +1,39 @@
+/**
+ * @type {Component}
+ */
+const cpn2 = {
+	insertId: "area2",
+	templates: [new HDO({
+		tagName: "div", classes: ["container"], contents: [
+			new HDO({ tagName: "p", contents: ["スクリプトが反映できるか"], attributes: {id: "rewrite"} }),
+			new HDO({ tagName: "button", attributes: {onClick: "testEvent()"}, contents: ["ボタン"]}),
+		]
+	})],
+
+	styles: {
+		".container": {
+			border: "solid red 2px",
+
+			"p": {
+				color: "blue",
+				fontSize: "2rem",
+			},
+
+			".inner1 p": {
+				color: "#c050c0",
+				fontWeight: "bold"
+			},
+
+			".inner2 p": {
+				color: "green",
+				fontSize: "0.7rem"
+			}
+		}
+	},
+
+	script: () => {
+		const testEvent = () => {
+			document.querySelector("#rewrite").textContent = "スクリプトが反映できたよ";
+		}
+	}
+}
