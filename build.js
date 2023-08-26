@@ -31,18 +31,22 @@ window.onload = () => {
 		});
 	});
 
-	let htmlString = `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name=”viewport” content=”width=device-width,initial-scale=1″><link rel="stylesheet" href="style.css"><script src="script.js"></script></head><body>${elementTemplate.innerHTML}</body></html>`;
+	let htmlString = `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name=”viewport” content=”width=device-width,initial-scale=1″><link rel="stylesheet" href="style.css">${generateStyleString(commonCssFiles)}<script src="script.js"></script></head><body>${elementTemplate.innerHTML.replaceAll(/(\n|\t)/g, "")}</body></html>`;
 
 	const script = document.createElement("script");
 
 	// script 部分の処理
+	script.textContent += "window.onload = () => {\n";
+
 	components.forEach((component) => {
 		if (component.script) {
 			script.textContent += component.script.toString().match(/(?<=^\(\)(\s|\n|)\=\>(\s|\n|)\{)[^]+(?=\}$)/)[0].replace(/^\n/, "").replace(/\n\t\t/g, "\n");
 			console.log(component.script.toString());
-			console.log(component.script.toString().match(/(?<=^\(\)(\s|\n|)\=\>(\s|\n|)\{)[^]+(?=\}$)/)[0].replace(/^\n/g, "").replace(/\n\t\t/g, "\n"));
+			console.log(component.script.toString().match(/(?<=^\(\)(\s|\n|)\=\>(\s|\n|)\{)[^]+(?=\}$)/)[0].replace(/^\n/g, ""));
 		}
 	});
+
+	script.textContent += "}";
 
 	document.body.appendChild(script);
 

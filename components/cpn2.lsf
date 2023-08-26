@@ -5,8 +5,9 @@ const cpn2 = {
 	insertId: "area2",
 	templates: [new HDO({
 		tagName: "div", classes: ["container"], contents: [
-			new HDO({ tagName: "p", contents: ["スクリプトが反映できるか"], attributes: {id: "rewrite"} }),
-			new HDO({ tagName: "button", attributes: {onClick: "testEvent()"}, contents: ["ボタン"]}),
+			new HDO({ tagName: "p", contents: ["ボタンを押すと、数字が増えるよ"] }),
+			new HDO({ tagName: "button", contents: ["ボタン"], classes: ["button"]}),
+			new HDO({tagName: "p", attributes: {id: "button-number"}}),
 		]
 	})],
 
@@ -32,8 +33,14 @@ const cpn2 = {
 	},
 
 	script: () => {
-		const testEvent = () => {
-			document.querySelector("#rewrite").textContent = "スクリプトが反映できたよ";
+		let count = 0;
+
+		document.querySelector("#button-number").textContent = 0;
+
+		const increment = () => {
+			document.querySelector("#button-number").textContent++;
 		}
+
+		document.querySelector(".button").addEventListener("click", increment);
 	}
 }
