@@ -5,15 +5,15 @@ window.onload = () => {
 	// style ドッキング部分
 	const styleArray = [];
 
-	components.forEach((component) => {
+	for (const component of components) {
 		console.log("styles: ", component.styles);
 		if (component.styles) {
-			Object.keys(component.styles).forEach((key) => {
+			for (const key in component.styles) {
 				const styleObject = component.styles[key];
 				generateStyle(`#${component.insertId} ${key}`, styleObject, styleArray, styleArray.length);
-			});
+			};
 		}
-	});
+	}
 
 	console.log(styleArray);
 
@@ -23,28 +23,28 @@ window.onload = () => {
 	const elementTemplate = document.querySelector(".template");
 
 	// template 部分の処理
-	components.forEach((component) => {
+	for (const component of components) {
 		const ctn = elementTemplate.querySelector('#' + component.insertId);
-		component.templates.forEach((template) => {
+		for (const template of component.templates) {
 			const elem = template.generateElement();
 			ctn.appendChild(elem);
-		});
-	});
+		}
+	}
 
-	let htmlString = `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name=”viewport” content=”width=device-width,initial-scale=1″><link rel="stylesheet" href="style.css">${generateStyleString(commonCssFiles)}<script src="script.js"></script></head><body>${elementTemplate.innerHTML.replaceAll(/(\n|\t)/g, "")}</body></html>`;
+	let htmlString = `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name=”viewport” content=”width=device-width,initial-scale=1″><link rel="stylesheet" href="style.css">${generateCssLinkString(commonCssFiles)}<script src="script.js"></script></head><body>${elementTemplate.innerHTML.replaceAll(/(\n|\t)/g, "")}</body></html>`;
 
 	const script = document.createElement("script");
 
 	// script 部分の処理
 	script.textContent += "window.onload = () => {\n";
 
-	components.forEach((component) => {
+	for (const component of components) {
 		if (component.script) {
 			script.textContent += component.script.toString().match(/(?<=^\(\)(\s|\n|)\=\>(\s|\n|)\{)[^]+(?=\}$)/)[0].replace(/^\n/, "").replace(/\n\t\t/g, "\n");
 			console.log(component.script.toString());
 			console.log(component.script.toString().match(/(?<=^\(\)(\s|\n|)\=\>(\s|\n|)\{)[^]+(?=\}$)/)[0].replace(/^\n/g, ""));
 		}
-	});
+	}
 
 	script.textContent += "}";
 

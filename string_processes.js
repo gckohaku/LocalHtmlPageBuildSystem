@@ -12,7 +12,7 @@ const convertCamelToKebab = (camelString) => {
  * @param {string[]} styleFiles 
  * @returns {string}
  */
-const generateStyleString = (styleFiles) => {
+const generateCssLinkString = (styleFiles) => {
 	let ret = "";
 
 	styleFiles.forEach(fileName => {

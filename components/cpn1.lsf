@@ -5,8 +5,8 @@ const cpn1 = {
 	insertId: "area1",
 	templates: [new HDO({
 		tagName: "div", contents: [
-			new HDO({ tagName: "p", classes: ["first"], styles: {color: "#42c4c0", fontSize: "32px"}, contents: ["ローカル環境で Vue.js の SFC みたいな書き方ができるものを作っているよ"] }),
-			new HDO({tagName: "p", classes: ["docking-test-case"], contents: ["オブジェクトのスタイル部分を反映させるだけならできたよ (Vue.js の style の部分)<br>あとは入れ子の処理とかそういうのがちゃんとできるようにしたい"]})
+			new HDO({ tagName: "p", classes: ["first"], styles: { color: "#42c4c0", fontSize: "32px" }, contents: ["ローカル環境で Vue.js の SFC みたいな書き方ができるものを作っているよ"] }),
+			new HDO({ tagName: "p", classes: ["docking-test-case"], contents: ["オブジェクトのスタイル部分を反映させるだけならできたよ (Vue.js の style の部分)<br>あとは入れ子の処理とかそういうのがちゃんとできるようにしたい"] })
 		]
 
 	})],
@@ -15,6 +15,11 @@ const cpn1 = {
 		".docking-test-case": {
 			color: "red",
 			fontSize: "2rem"
+		},
+		"div": {
+			"& p.first, & p.docking-test-case": {
+				textDecoration: "underline",
+			}
 		}
 	},
 

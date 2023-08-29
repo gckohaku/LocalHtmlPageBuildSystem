@@ -1,4 +1,28 @@
 /**
+ * セレクタが複数指定されているものかどうか
+ * @param {string} selector 
+ * @returns {boolean}
+ */
+const checkMultipleSelector = (selector) => {
+	let depth = 0;
+
+	for (const c of selector) {
+		if (c === "(") {
+			depth++;
+			continue;
+		}
+		if (c === ")") {
+			depth--;
+		}
+		if (c === "," && depth === 0) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+/**
  * スタイルの文字列をまとめた配列を生成
  *     dockingArray に対する副作用あり
  * @param {string} selector 
@@ -11,22 +35,29 @@ const generateStyle = (selector, obj, dockingArray, insertIndex) => {
 
 	let res = selector + " {\n";
 
-	Object.keys(obj).forEach((key) => {
-		console.log(typeof (obj[key]));
-		if (typeof (obj[key]) === "object") {
+	for (const ckey in obj) {
+		let key = ckey;
+
+		console.log(typeof (obj[ckey]));
+		if (typeof (obj[ckey]) === "object") {
 			const innerArray = [];
 			dockingArray.push(innerArray);
-			if (key[0] === "&") {
-				generateStyle(selecto + key.substring(1, key.length), obj[key], innerArray, innerArray.length);
+
+			if (checkMultipleSelector(key)) {
+				key = ":is(" + key + ")";
+			}
+
+			if (key.includes("&")) {
+				generateStyle(key.replaceAll("&", selector), obj[ckey], innerArray, innerArray.length);
 			}
 			else {
-				generateStyle(selector + " " + key, obj[key], innerArray, innerArray.length);
+				generateStyle(selector + " " + key, obj[ckey], innerArray, innerArray.length);
 			}
 		}
 		else {
-			res += `\t${convertCamelToKebab(key)}: ${obj[key]};\n`;
+			res += `\t${convertCamelToKebab(key)}: ${obj[ckey]};\n`;
 		}
-	});
+	}
 
 	res += "}";
 
@@ -40,7 +71,7 @@ const generateStyle = (selector, obj, dockingArray, insertIndex) => {
  */
 const makeStyleContent = (styles, contentStr) => {
 	let ret = "";
-	styles.forEach((style) => {
+	for (const style of styles) {
 		if (typeof (style) === "object") {
 			ret += makeStyleContent(style, contentStr);
 		}
@@ -48,7 +79,7 @@ const makeStyleContent = (styles, contentStr) => {
 			console.log(style);
 			ret += style + "\n\n";
 		}
-	});
+	}
 
 	return ret;
 }

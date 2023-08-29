@@ -19,16 +19,6 @@ const cpn2 = {
 				color: "blue",
 				fontSize: "2rem",
 			},
-
-			".inner1 p": {
-				color: "#c050c0",
-				fontWeight: "bold"
-			},
-
-			".inner2 p": {
-				color: "green",
-				fontSize: "0.7rem"
-			}
 		}
 	},
 
@@ -38,7 +28,11 @@ const cpn2 = {
 		document.querySelector("#button-number").textContent = 0;
 
 		const increment = () => {
-			document.querySelector("#button-number").textContent++;
+			count++;
+			let docNum = parseInt(document.querySelector("#button-number").textContent);
+			docNum += count;
+			document.querySelector("#button-number").textContent = docNum;
+			console.log(count);
 		}
 
 		document.querySelector(".button").addEventListener("click", increment);
