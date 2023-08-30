@@ -1,0 +1,16 @@
+:root {
+	--common-block-margin: 1.1rem;
+}
+
+h2 {
+	margin-block-start: calc(var(--common-block-margin) + 0.5rem);
+}
+
+p {
+	margin-block-start: var(--common-block-margin);
+}
+
+.whole-wrapper {
+	max-width: 1000px;
+	margin-inline: auto;
+}

@@ -1,1 +1,1 @@
-const commonCssFiles = ["init.css"];
+const commonCssFiles = ["init.css", "common.css"];

@@ -8,3 +8,7 @@
 	padding-inline: 10px;
 	cursor: pointer;
 }
+
+.template {
+	display: none;
+}
