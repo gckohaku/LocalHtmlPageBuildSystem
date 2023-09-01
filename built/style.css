@@ -1,9 +1,0 @@
-#introduction .container {
-	background-color: #ffe0ff;
-	border-radius: 0.5rem;
-	padding: 0.5rem;
-	margin-top: var(--common-block-margin);
-}
-#introduction .container :first-child {
-	margin-top: 0;
-}
