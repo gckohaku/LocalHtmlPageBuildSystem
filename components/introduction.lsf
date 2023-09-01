@@ -7,10 +7,26 @@ const introduction = {
 		new HDO({
 			tagName: "section", contents: [
 				new HDO({ tagName: "h2", contents: ["これはなに？"] }),
-				new HDO({ tagName: "p", contents: ["元々は1つの HTML ファイルを複数のファイルにローカル環境で分割したいというところから始まりました。<br>そのはずが、コンポーネントの概念なんかを取り入れちゃったのがこれです。"] }),
-				new HDO({ tagName: "p", contents: ["HTML ファイルが長くなりすぎて複数のファイルに分割したくなることってありませんか？ わたしはあります。<br>複数のファイルに分割するのって、フレームワークとか使ってやる感じになると思うんですけど、どうしてもローカルで HTML ページを用意する必要がある場合もあると思うんです。"] }),
-				new HDO({tagName: "p", contents: ["そこで、ローカル環境で HTML ファイルを分割できるようになればいいのではないかと思い、開発するに至ったわけです。<br>まあ、結果としては当初想定していたものとは別のものが出来上がった感じがしますが．．．"]}),
+				new HDO({
+					tagName: "div", classes: ["container"], contents: [
+						new HDO({ tagName: "p", contents: ["元々は1つの HTML ファイルを複数のファイルにローカル環境で分割したいというところから始まりました。<br>そのはずが、コンポーネントの概念なんかを取り入れちゃったのがこれです。"] }),
+						new HDO({ tagName: "p", contents: ["HTML ファイルが長くなりすぎて複数のファイルに分割したくなることってありませんか？ わたしはあります。<br>複数のファイルに分割するのって、フレームワークとか使ってやる感じになると思うんですけど、どうしてもローカルで HTML ページを用意する必要がある場合もあると思うんです。"] }),
+						new HDO({ tagName: "p", contents: ["そこで、ローカル環境で HTML ファイルを分割できるようになればいいのではないかと思い、開発するに至ったわけです。<br>まあ、結果としては当初想定していたものとは別のものが出来上がった感じがしますが．．．"] }),
+					]
+				}),
 			]
 		}),
-	]
+	],
+
+	styles: {
+		".container": {
+			backgroundColor: "#ffe0ff",
+			borderRadius: "1rem",
+			padding: "0.5rem",
+			marginTop: "var(--common-block-margin)",
+			"& :first-child": {
+				marginTop: 0,
+			}
+		}
+	}
 }
