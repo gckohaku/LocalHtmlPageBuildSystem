@@ -3,5 +3,7 @@
  */
 const howToUse = {
 	insertId: "how-to-use",
-	templates: []
+	templates: [
+		
+	]
 }

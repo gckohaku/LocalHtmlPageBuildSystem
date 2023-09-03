@@ -1,0 +1,45 @@
+/**
+ * @type {Component}
+ */
+const currentTime = {
+	insertId: "current-time",
+	templates: [
+		new HDO({
+			tagName: "div", classes: ["time-wrapper"], contents: [
+				new HDO({
+					tagName: "div", classes: ["time-container"], contents: [
+						new HDO({ tagName: "span", classes: ["hour"] }), new HDO({ tagName: "span", contents: [":"], classes: ["first-colon"] }),
+						new HDO({ tagName: "span", classes: ["minute"] }), new HDO({ tagName: "span", contents: [":"], classes: ["second-colon"] }),
+						new HDO({ tagName: "span", classes: ["second"] }), new HDO({ tagName: "span", contents: ["."], classes: ["period"] }),
+						new HDO({ tagName: "span", classes: ["milisecond"] }),
+					]
+				}),
+			]
+		}),
+	],
+
+	styles: {
+		".time-wrapper": {
+			textAlign: "center",
+			paddingBlock: "2rem",
+			fontSize: "2rem",
+		}
+	},
+
+	script: () => {
+		const twoDigit = (num, digit = 2) => {
+			return ("0".repeat(digit - 1) + num).slice(-digit);
+		}
+
+		const setTime = () => {
+			const now = new Date();
+			document.querySelector(".hour").textContent = twoDigit(now.getHours());
+			document.querySelector(".minute").textContent = twoDigit(now.getMinutes());
+			document.querySelector(".second").textContent = twoDigit(now.getSeconds());
+			document.querySelector(".milisecond").textContent = twoDigit(now.getMilliseconds(), 3);
+			requestAnimationFrame(setTime);
+		}
+
+		requestAnimationFrame(setTime);
+	}
+}

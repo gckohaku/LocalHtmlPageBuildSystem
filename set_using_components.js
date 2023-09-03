@@ -3,4 +3,6 @@
  */
 const components = [
 	introduction,
+	howToUse,
+	currentTime,
 ];
