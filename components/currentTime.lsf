@@ -8,10 +8,33 @@ const currentTime = {
 			tagName: "div", classes: ["time-wrapper"], contents: [
 				new HDO({
 					tagName: "div", classes: ["time-container"], contents: [
-						new HDO({ tagName: "span", classes: ["hour"] }), new HDO({ tagName: "span", contents: [":"], classes: ["first-colon"] }),
-						new HDO({ tagName: "span", classes: ["minute"] }), new HDO({ tagName: "span", contents: [":"], classes: ["second-colon"] }),
-						new HDO({ tagName: "span", classes: ["second"] }), new HDO({ tagName: "span", contents: ["."], classes: ["period"] }),
-						new HDO({ tagName: "span", classes: ["milisecond"] }),
+						new HDO({
+							tagName: "div", classes: ["top-container"], contents: [
+							]
+						}),
+
+						new HDO({
+							tagName: "div", classes: ["middle-container"], contents: [
+								new HDO({
+									tagName: "svg", classes: ["hour-circle"], attributes: { viewBox: "0 0 2 2" }, contents: [
+										new HDO({tagName: "path", attributes: {"stroke-width": "0.2", "fill-opacity": 0, "stroke-opacity": 1, stroke: "black"}}),
+									]
+								}),
+								new HDO({
+									tagName: "div", classes: ["number-container"], contents: [
+										new HDO({ tagName: "span", classes: ["hour"] }), new HDO({ tagName: "span", contents: [":"], classes: ["first-colon"] }),
+										new HDO({ tagName: "span", classes: ["minute"] }), new HDO({ tagName: "span", contents: [":"], classes: ["second-colon"] }),
+										new HDO({ tagName: "span", classes: ["second"] }), new HDO({ tagName: "span", contents: ["."], classes: ["period"] }),
+										new HDO({ tagName: "span", classes: ["millisecond"] }),
+									]
+								}),
+							]
+						}),
+
+						new HDO({
+							tagName: "div", classes: ["bottom-container"], contents: [
+							]
+						}),
 					]
 				}),
 			]
@@ -23,6 +46,11 @@ const currentTime = {
 			textAlign: "center",
 			paddingBlock: "2rem",
 			fontSize: "2rem",
+
+			".hour-circle": {
+				width: "2rem",
+				height: "2rem",
+			}
 		}
 	},
 
@@ -33,10 +61,20 @@ const currentTime = {
 
 		const setTime = () => {
 			const now = new Date();
-			document.querySelector(".hour").textContent = twoDigit(now.getHours());
-			document.querySelector(".minute").textContent = twoDigit(now.getMinutes());
-			document.querySelector(".second").textContent = twoDigit(now.getSeconds());
-			document.querySelector(".milisecond").textContent = twoDigit(now.getMilliseconds(), 3);
+			const hour = now.getHours();
+			const minute = now.getMinutes();
+			const second = now.getSeconds();
+			const millisecond = now.getMilliseconds();
+
+			const floatSecond = second + millisecond / 1000;
+
+			document.querySelector(".hour-circle path").setAttribute("d", `M 1 0.1 A 0.9 0.9 0 ${(floatSecond <= 30) ? 0 : 1} 1 ${1 + 0.9 * Math.cos((floatSecond - 15) / 30 * Math.PI)} ${1 + 0.9 * Math.sin((floatSecond - 15) / 30 * Math.PI)}`);
+
+			document.querySelector(".hour").textContent = twoDigit(hour);
+			document.querySelector(".minute").textContent = twoDigit(minute);
+			document.querySelector(".second").textContent = twoDigit(second);
+			document.querySelector(".millisecond").textContent = twoDigit(millisecond, 3);
+
 			requestAnimationFrame(setTime);
 		}
 

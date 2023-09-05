@@ -4,6 +4,6 @@
 const howToUse = {
 	insertId: "how-to-use",
 	templates: [
-		
+		new HDO({tagName: "p", contents: []}),
 	]
 }
