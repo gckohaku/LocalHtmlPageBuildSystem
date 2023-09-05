@@ -17,7 +17,7 @@ const currentTime = {
 							tagName: "div", classes: ["middle-container"], contents: [
 								new HDO({
 									tagName: "svg", classes: ["hour-circle"], attributes: { viewBox: "0 0 2 2" }, contents: [
-										new HDO({tagName: "path", attributes: {"stroke-width": "0.2", "fill-opacity": 0, "stroke-opacity": 1, stroke: "black"}}),
+										new HDO({ tagName: "path", attributes: { "stroke-width": "0.2", "fill-opacity": 0, "stroke-opacity": 1, stroke: "black" } }),
 									]
 								}),
 								new HDO({
@@ -47,9 +47,22 @@ const currentTime = {
 			paddingBlock: "2rem",
 			fontSize: "2rem",
 
-			".hour-circle": {
-				width: "2rem",
-				height: "2rem",
+			".middle-container": {
+				display: "flex",
+				flexDirection: "row-reverse",
+				justifyContent: "center",
+				alignItems: "center",
+				gap: "1rem",
+
+				".hour-circle": {
+					width: "2rem",
+					height: "2rem",
+				},
+
+				".number-container": {
+					position: "relative",
+					top: "3px",
+				},
 			}
 		}
 	},
@@ -68,7 +81,14 @@ const currentTime = {
 
 			const floatSecond = second + millisecond / 1000;
 
-			document.querySelector(".hour-circle path").setAttribute("d", `M 1 0.1 A 0.9 0.9 0 ${(floatSecond <= 30) ? 0 : 1} 1 ${1 + 0.9 * Math.cos((floatSecond - 15) / 30 * Math.PI)} ${1 + 0.9 * Math.sin((floatSecond - 15) / 30 * Math.PI)}`);
+			const timePath = document.querySelector(".hour-circle path");
+
+			if (floatSecond <= 30) {
+				timePath.setAttribute("d", `M 1 0.1 A 0.9 0.9 0 ${(floatSecond <= 15) ? 0 : 1} 1 ${1 + 0.9 * Math.cos((floatSecond - 7.5) / 15 * Math.PI)} ${1 + 0.9 * Math.sin((floatSecond - 7.5) / 15 * Math.PI)}`);
+			}
+			else {
+				timePath.setAttribute("d", `M ${1 + 0.9 * Math.cos((floatSecond - 37.5) / 15 * Math.PI)} ${1 + 0.9 * Math.sin((floatSecond - 37.5) / 15 * Math.PI)} A 0.9 0.9 0 ${(floatSecond <= 45) ? 1 : 0} 1 1 0.1`);
+			}
 
 			document.querySelector(".hour").textContent = twoDigit(hour);
 			document.querySelector(".minute").textContent = twoDigit(minute);
