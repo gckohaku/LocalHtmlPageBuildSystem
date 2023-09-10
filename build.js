@@ -62,7 +62,7 @@ window.onload = () => {
 		const templateAnchor = document.createElement("a");
 
 		scriptAnchor.download = "script.js";
-		scriptAnchor.href = `data:,${script.textContent.replaceAll("#", escapeHash)}`;
+		scriptAnchor.href = `data:,${script.textContent.replaceAll("#", escapeHash).replaceAll("!", "^!")}`;
 
 		styleAnchor.download = "style.css";
 		styleAnchor.href = `data:,${style.textContent.replaceAll("#", escapeHash)}`;

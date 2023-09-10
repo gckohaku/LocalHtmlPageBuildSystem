@@ -10,6 +10,15 @@ const currentTime = {
 					tagName: "div", classes: ["time-container"], contents: [
 						new HDO({
 							tagName: "div", classes: ["top-container"], contents: [
+								new HDO({
+									tagName: "div", classes: ["second-square-container"], contents: [
+										new HDO({ tagName: "div", classes: ["square"] }),
+										new HDO({ tagName: "div", classes: ["square"] }),
+										new HDO({ tagName: "div", classes: ["square"] }),
+										new HDO({ tagName: "div", classes: ["square"] }),
+										new HDO({ tagName: "div", classes: ["square"] }),
+									]
+								}),
 							]
 						}),
 
@@ -47,6 +56,28 @@ const currentTime = {
 			paddingBlock: "2rem",
 			fontSize: "2rem",
 
+			".top-container": {
+				".second-square-container": {
+					display: "flex",
+					justifyContent: "center",
+					gap: "0.25rem",
+
+					".square": {
+						boxSizing: "border-box",
+						height: "0.5rem",
+						width: "0.5rem",
+
+						"&.border": {
+							border: "solid #a05000 1px",
+						},
+
+						"&.back": {
+							backgroundColor: "#a05000",
+						},
+					},
+				},
+			},
+
 			".middle-container": {
 				display: "flex",
 				flexDirection: "row-reverse",
@@ -63,14 +94,16 @@ const currentTime = {
 					position: "relative",
 					top: "3px",
 				},
-			}
-		}
+			},
+		},
 	},
 
 	script: () => {
 		const twoDigit = (num, digit = 2) => {
 			return ("0".repeat(digit - 1) + num).slice(-digit);
 		}
+
+		const clockTopSquare = document.querySelectorAll(".second-square-container .square");
 
 		const setTime = () => {
 			const now = new Date();
@@ -80,6 +113,29 @@ const currentTime = {
 			const millisecond = now.getMilliseconds();
 
 			const floatSecond = second + millisecond / 1000;
+
+			// top
+
+			for (let i = 0; i < 5; i++) {
+				clockTopSquare[i].classList.remove("border");
+			}
+
+			for (let i = 0; i < 5; i++) {
+				clockTopSquare[i].classList.remove("back");
+			}
+
+			const modSec = second % 10;
+			const sec = modSec === 0 ? 10 : modSec;
+
+			for (let i = 1; i <= Math.min(sec, 5); i++) {
+				clockTopSquare[i - 1].classList.add("border");
+			}
+
+			for (let i = 1; i <= sec - 5; i++) {
+				clockTopSquare[i - 1].classList.add("back");
+			}
+
+			// middle
 
 			const timePath = document.querySelector(".hour-circle path");
 
